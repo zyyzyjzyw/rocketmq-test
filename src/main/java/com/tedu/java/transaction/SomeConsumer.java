@@ -1,4 +1,4 @@
-package com.tedu.java.general;
+package com.tedu.java.transaction;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -7,6 +7,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.util.List;
 
@@ -28,13 +29,9 @@ public class SomeConsumer {
         //指定从第一条消息开始消费
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         //指定消费topic与tag
-        consumer.subscribe("someTopic","*");
+        consumer.subscribe("TTopic","*");
         //采用广播模式进行消费，默认为集群模式
-        //consumer.setMessageModel(MessageModel.BROADCASTING);
-        //顺序消息消费失败的消费重试,默认为1000毫秒，单位毫秒，其取值范围为[10,30000]毫秒
-        consumer.setSuspendCurrentQueueTimeMillis(100);
-        //修改消费重试次数，默认为16次
-        consumer.setMaxReconsumeTimes(10);
+        consumer.setMessageModel(MessageModel.BROADCASTING);
         //注册消息监听器
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             //一旦broker中有其订阅的消息就会触发该方法的执行

@@ -21,7 +21,7 @@ public class SyncProducer {
         //指定nameServer地址
         producer.setNamesrvAddr("rocketmqOS1:9876");
         //设置当发送失败时，重试的次数，默认为2次
-        producer.setRetryTimesWhenSendAsyncFailed(3);
+        producer.setRetryTimesWhenSendFailed(3);
         //设置发送超时时限为5s,默认为3s
         producer.setSendMsgTimeout(5000);
         //开启生产者
